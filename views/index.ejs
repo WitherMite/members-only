@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Message Board</title>
+  </head>
+  <body>
+    <main class="message-center">
+      <a href="/new"><button>add message</button></a>
+      <% messages.map((message, i) => { %>
+      <div class="card">
+        <h2 class="user"><%= message.username %>:</h2>
+        <p class="text"><%= message.message %></p>
+        <a href="/message?n=<%= i %>"><button>details</button></a>
+      </div>
+      <% }); %>
+    </main>
+  </body>
+</html>
