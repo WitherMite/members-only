@@ -6,19 +6,29 @@ const caPath = process.argv[3];
 const ca = caPath ? fs.readFileSync(caPath).toString() : false;
 
 const SQL = `
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+  username TEXT,
+  password TEXT,
+  first_name TEXT,
+  last_name TEXT,
+  is_member BOOL,
+  is_admin BOOL
+);
+
+INSERT INTO users (username, password, first_name, last_name, is_member, is_admin) VALUES ('Server', 'admin1', '', '', TRUE, TRUE);
+
 DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  username TEXT,
+  user_id INTEGER,
+  title TEXT,
   message TEXT,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO messages (username, message) 
-VALUES (
-  'Server',
-  'Hi there, this is a simple message board!'
-);
+INSERT INTO messages (user_id, title, message) VALUES (1, 'Welcome!', 'Hello, this is a members only message board!');
 `;
 
 async function main() {
