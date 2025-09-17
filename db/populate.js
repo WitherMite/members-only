@@ -11,13 +11,13 @@ CREATE TABLE users (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   username TEXT,
   password TEXT,
-  first_name TEXT,
-  last_name TEXT,
-  is_member BOOL,
-  is_admin BOOL
+  firstname TEXT,
+  lastname TEXT,
+  is_member BOOL DEFAULT FALSE,
+  is_admin BOOL DEFAULT FALSE
 );
 
-INSERT INTO users (username, password, first_name, last_name, is_member, is_admin) VALUES ('Server', 'admin1', '', '', TRUE, TRUE);
+INSERT INTO users (username, password, firstname, lastname, is_member, is_admin) VALUES ('example@server.com', '$2b$10$p1EldfZLqHUYO6YjYnAhpubPoydZud9YMWJrn/jKqAkl2cIh9qsie', 'Server', '', TRUE, TRUE);
 
 DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (

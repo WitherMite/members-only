@@ -3,17 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mini Message Board</title>
+    <title>Members Only!</title>
   </head>
   <body>
+    <header>
+      <nav>
+        <a href="/signup"><button>Signup</button></a>
+      </nav>
+    </header>
     <main class="message-center">
-      <a href="/new"><button>add message</button></a>
+      <!-- prettier-ignore -->
       <% messages.map((message, i) => { %>
-      <div class="card">
-        <h2 class="user"><%= message.username %>:</h2>
-        <p class="text"><%= message.message %></p>
-        <a href="/message?n=<%= i %>"><button>details</button></a>
-      </div>
+        <%- include("./message.ejs", {message}) %>
       <% }); %>
     </main>
   </body>

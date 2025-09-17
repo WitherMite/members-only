@@ -1,31 +1,32 @@
-const pool = require("../db/messagePool");
+const bcrypt = require("bcryptjs");
+const userDB = require("../db/userQueries");
+const messageDB = require("../db/messageQueries");
 
-exports.renderMessages = async (req, res) => {
-  const { rows } = await pool.query(
-    "SELECT * FROM messages AS m JOIN (SELECT id AS user_id, username FROM users) AS u on m.user_id = u.user_id;"
-  );
-  res.render("index", { messages: rows });
+// renderers
+
+exports.viewIndex = async (req, res) => {
+  const messages = await messageDB.readAllFull();
+  res.render("index", { messages });
 };
 
-exports.renderMessageByIndex = async (req, res) => {
-  // possibly unneeded
-  const id = ++req.query.n;
-  const { rows } = await pool.query(
-    "SELECT * FROM messages AS m JOIN (SELECT id AS user_id, username FROM users) AS u on m.user_id = u.user_id WHERE id = $1;",
-    [id]
-  );
-  res.render("message", rows[0]);
+exports.viewSignupForm = async (req, res) => {
+  res.render("signup-form");
 };
 
-exports.renderMessageForm = (req, res) => {
-  res.render("form");
-};
+// CRUD
 
-// exports.addMessage = async (req, res) => {
-//   const message = [req.body.username, req.body.message];
-//   await pool.query(
-//     "INSERT INTO messages (username, message) VALUES ($1,$2);",
-//     message
-//   );
-//   res.redirect("/");
-// };
+exports.addUser = async (req, res, next) => {
+  try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    await userDB.createUser(
+      req.body.username,
+      hashedPassword,
+      req.body.firstname,
+      req.body.lastname
+    );
+    res.redirect("/");
+  } catch (e) {
+    console.error(e);
+    next(e);
+  }
+};
