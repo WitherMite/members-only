@@ -9,7 +9,7 @@ const SQL = `
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  username TEXT,
+  username TEXT UNIQUE,
   password TEXT,
   firstname TEXT,
   lastname TEXT,
