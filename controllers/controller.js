@@ -24,10 +24,13 @@ exports.addUser = [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.table(errors.array()); // replace with real error handling
-      return res
-        .status(400)
-        .render("signup-form", { username, firstname, lastname });
+      console.table(errors.array());
+      return res.status(400).render("signup-form", {
+        username,
+        firstname,
+        lastname,
+        errorList: errors.array(),
+      });
     }
 
     try {
