@@ -1,0 +1,16 @@
+<form action="/member-form" method="post">
+  <div class="form-control">
+    <label for="pass">Password:</label>
+    <input type="password" id="pass" name="password" required />
+  </div>
+
+  <% if (locals.errorList) { %>
+  <div class="form-errors">
+    <% errorList.forEach(error => { %>
+    <p class="error"><%= error.msg %></p>
+    <% }); %>
+  </div>
+  <% } %>
+
+  <button type="submit">Become a member!</button>
+</form>

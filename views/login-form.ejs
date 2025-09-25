@@ -1,0 +1,27 @@
+<form action="/login" method="post">
+  <div class="form-control">
+    <label for="username">Username:</label>
+    <input
+      type="text"
+      id="username"
+      name="username"
+      required
+      value="<%= locals.username %>"
+    />
+  </div>
+
+  <div class="form-control">
+    <label for="pass">Password:</label>
+    <input type="password" id="pass" name="password" required />
+  </div>
+
+  <% if (locals.errorList) { %>
+  <div class="form-errors">
+    <% errorList.forEach(error => { %>
+    <p class="error"><%= error.msg %></p>
+    <% }); %>
+  </div>
+  <% } %>
+
+  <button type="submit">Log in</button>
+</form>

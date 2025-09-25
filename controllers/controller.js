@@ -2,9 +2,19 @@ const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
 const userDB = require("../db/userQueries");
 const messageDB = require("../db/messageQueries");
+const passportStrategy = require("./passportStrategy");
 const validators = require("./validators");
 
-// renderers
+// Authentication
+
+exports.loginUser = (req, res) => {
+  passportStrategy.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  });
+}; // find a way to give user error feedback
+
+// Renderers
 
 exports.viewIndex = async (req, res) => {
   const messages = await messageDB.readAllFull();
@@ -13,6 +23,14 @@ exports.viewIndex = async (req, res) => {
 
 exports.viewSignupForm = async (req, res) => {
   res.render("signup-form");
+};
+
+exports.viewLoginForm = async (req, res) => {
+  res.render("login-form");
+};
+
+exports.viewMemberForm = async (req, res) => {
+  res.render("member-form");
 };
 
 // CRUD
@@ -43,3 +61,5 @@ exports.addUser = [
     }
   },
 ];
+
+exports.makeUserMember = async (req, res) => {};

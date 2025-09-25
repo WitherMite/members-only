@@ -1,4 +1,4 @@
-const pool = require("../db/messagePool");
+const pool = require("./Pool");
 
 exports.readAllFull = async () => {
   const { rows } = await pool.query(
