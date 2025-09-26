@@ -24,8 +24,17 @@ exports.logoutUser = (req, res, next) => {
 // Renderers
 
 exports.viewIndex = async (req, res) => {
-  const messages = await messageDB.readAllFull();
-  res.render("index", { messages });
+  const user = req.user;
+  if (!user) {
+    const messages = await messageDB.readAllAnon();
+    return res.render("index", { messages });
+  }
+  if (user.is_member) {
+    const messages = await messageDB.readAllFull();
+    return res.render("index", { messages, user });
+  }
+  const messages = await messageDB.readAllAnon();
+  return res.render("index", { messages, user });
 };
 
 exports.viewSignupForm = async (req, res) => {
@@ -38,7 +47,7 @@ exports.viewLoginForm = async (req, res) => {
 
 exports.viewMemberForm = async (req, res) => {
   res.render("member-form");
-};
+}; // protect this route
 
 // CRUD
 

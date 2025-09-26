@@ -8,12 +8,16 @@
   <body>
     <header>
       <nav>
+        <% if(!locals.user) {%>
         <a href="/signup"><button>Signup</button></a>
         <a href="/login"><button>Log in</button></a>
+        <% } else { %>
         <form action="/logout" method="post">
           <button type="submit">Log out</button>
         </form>
+        <% if (!user.is_member) { %>
         <a href="/member-form"><button>Become a member!</button></a>
+        <% }} %>
       </nav>
     </header>
     <main class="message-center">
