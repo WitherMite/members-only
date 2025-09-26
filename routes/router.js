@@ -8,6 +8,7 @@ router.get("/login", controller.viewLoginForm);
 router.get("/member-form", controller.viewMemberForm);
 router.post("/signup", controller.addUser);
 router.post("/login", controller.loginUser);
+router.post("/logout", controller.logoutUser);
 router.post("/member-form", controller.makeUserMember);
 
 module.exports = router;

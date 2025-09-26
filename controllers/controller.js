@@ -7,12 +7,19 @@ const validators = require("./validators");
 
 // Authentication
 
-exports.loginUser = (req, res) => {
-  passportStrategy.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+exports.loginUser = passportStrategy.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+}); // find a way to give user error feedback
+
+exports.logoutUser = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
   });
-}; // find a way to give user error feedback
+};
 
 // Renderers
 

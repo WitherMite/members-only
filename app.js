@@ -25,14 +25,13 @@ app.use(
   })
 );
 app.use(passportStrategy.session());
-app.use(express.urlencoded({ extended: true }));
-app.use("/", router);
-
 app.use((req, res, next) => {
   console.table(req.session);
   console.table(req.user);
   next();
 });
+app.use(express.urlencoded({ extended: true }));
+app.use("/", router);
 
 app.listen(port, () => {
   console.log("app running on port " + port);
