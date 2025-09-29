@@ -1,7 +1,7 @@
 <div class="message-card">
   <h2 class="title"><%= message.title %></h2>
   <p class="msg"><%= message.message %></p>
-  <% if (locals.user) {%>
+  <% if (locals.user.is_member) {%>
   <p class="meta-stamp">
     Sent by <%= message.username %> at <%= message.created %>
   </p>

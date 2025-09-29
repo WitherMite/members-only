@@ -46,8 +46,11 @@ exports.viewLoginForm = async (req, res) => {
 };
 
 exports.viewMemberForm = async (req, res) => {
-  res.render("member-form");
-}; // protect this route
+  if (req.isAuthenticated()) {
+    return res.render("member-form", { wasFailure: req.query.f });
+  }
+  res.redirect("/");
+};
 
 // CRUD
 
@@ -78,4 +81,11 @@ exports.addUser = [
   },
 ];
 
-exports.makeUserMember = async (req, res) => {}; // protect this route
+exports.makeUserMember = async (req, res) => {
+  const { password } = req.body;
+  if (req.isAuthenticated() && password === process.env.MEMBER_PW) {
+    await userDB.makeUserMember(req.user.id);
+    return res.redirect("/");
+  }
+  res.redirect("/member-form?f=1");
+};

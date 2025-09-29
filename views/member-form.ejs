@@ -4,11 +4,9 @@
     <input type="password" id="pass" name="password" required />
   </div>
 
-  <% if (locals.errorList) { %>
+  <% if (locals.wasFailure) { %>
   <div class="form-errors">
-    <% errorList.forEach(error => { %>
-    <p class="error"><%= error.msg %></p>
-    <% }); %>
+    <p class="error">Password was incorrect.</p>
   </div>
   <% } %>
 
