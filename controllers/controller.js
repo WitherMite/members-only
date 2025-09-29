@@ -9,8 +9,8 @@ const validators = require("./validators");
 
 exports.loginUser = passportStrategy.authenticate("local", {
   successRedirect: "/",
-  failureRedirect: "/login",
-}); // find a way to give user error feedback
+  failureRedirect: "/login?f=1",
+});
 
 exports.logoutUser = (req, res, next) => {
   req.logout((err) => {
@@ -42,7 +42,7 @@ exports.viewSignupForm = async (req, res) => {
 };
 
 exports.viewLoginForm = async (req, res) => {
-  res.render("login-form");
+  res.render("login-form", { wasFailure: req.query.f });
 };
 
 exports.viewMemberForm = async (req, res) => {
@@ -78,4 +78,4 @@ exports.addUser = [
   },
 ];
 
-exports.makeUserMember = async (req, res) => {};
+exports.makeUserMember = async (req, res) => {}; // protect this route

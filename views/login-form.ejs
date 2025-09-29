@@ -1,13 +1,7 @@
 <form action="/login" method="post">
   <div class="form-control">
     <label for="username">Username:</label>
-    <input
-      type="text"
-      id="username"
-      name="username"
-      required
-      value="<%= locals.username %>"
-    />
+    <input type="text" id="username" name="username" required />
   </div>
 
   <div class="form-control">
@@ -15,11 +9,9 @@
     <input type="password" id="pass" name="password" required />
   </div>
 
-  <% if (locals.errorList) { %>
+  <% if (locals.wasFailure) { %>
   <div class="form-errors">
-    <% errorList.forEach(error => { %>
-    <p class="error"><%= error.msg %></p>
-    <% }); %>
+    <p class="error">Username or password was incorrect.</p>
   </div>
   <% } %>
 

@@ -12,7 +12,9 @@ passport.use(
         return callback(null, false, { message: "Incorrect username." });
       }
 
-      if (!bcrypt.compare(password, user.password)) {
+      const matches = await bcrypt.compare(password, user.password);
+
+      if (!matches) {
         return callback(null, false, { message: "Incorrect password." });
       }
 
