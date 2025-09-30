@@ -101,10 +101,12 @@ exports.newMessage = [
     const { title, message } = req.body;
     if (!req.isAuthenticated()) {
       // wouldnt happen through the website, but could still send a POST without the form i guess
+      const errorList = errors.array();
+      errorList.push({ msg: "You are not logged in." });
       return res.status(400).render("message-form", {
         title,
         message,
-        errorList: errors.array().push({ msg: "You are not logged in." }),
+        errorList,
       });
     }
 
