@@ -1,0 +1,14 @@
+<form action="/admin-form" method="post">
+  <div class="form-control">
+    <label for="pass">Password:</label>
+    <input type="password" id="pass" name="password" required />
+  </div>
+
+  <% if (locals.wasFailure) { %>
+  <div class="form-errors">
+    <p class="error">Password was incorrect.</p>
+  </div>
+  <% } %>
+
+  <button type="submit">Become an admin!</button>
+</form>

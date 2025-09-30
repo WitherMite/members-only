@@ -17,6 +17,8 @@
         </form>
         <% if (!user.is_member) { %>
         <a href="/member-form"><button>Become a member!</button></a>
+        <% } else if (!user.is_admin) { %>
+        <a href="/admin-form"><button>Become an admin!</button></a>
         <% }} %>
       </nav>
     </header>

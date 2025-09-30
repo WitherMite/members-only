@@ -52,6 +52,13 @@ exports.viewMemberForm = async (req, res) => {
   res.redirect("/");
 };
 
+exports.viewAdminForm = async (req, res) => {
+  if (req.isAuthenticated() && req.user.is_member) {
+    return res.render("admin-form", { wasFailure: req.query.f });
+  }
+  res.redirect("/");
+};
+
 // CRUD
 
 exports.addUser = [
@@ -88,4 +95,17 @@ exports.makeUserMember = async (req, res) => {
     return res.redirect("/");
   }
   res.redirect("/member-form?f=1");
+};
+
+exports.makeUserAdmin = async (req, res) => {
+  const { password } = req.body;
+  if (
+    req.isAuthenticated() &&
+    req.user.is_member &&
+    password === process.env.ADMIN_PW
+  ) {
+    await userDB.makeUserAdmin(req.user.id);
+    return res.redirect("/");
+  }
+  res.redirect("/admin-form?f=1");
 };

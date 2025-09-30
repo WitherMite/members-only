@@ -25,3 +25,9 @@ exports.makeUserMember = async (id) => {
     id,
   ]);
 };
+
+exports.makeUserAdmin = async (id) => {
+  return await pool.query("UPDATE users SET is_admin = true WHERE id = $1", [
+    id,
+  ]);
+};
