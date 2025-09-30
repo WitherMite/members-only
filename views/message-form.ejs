@@ -1,1 +1,28 @@
-<form method="POST" action="/new"></form>
+<form method="POST" action="/new">
+  <div class="form-control">
+    <label for="title">Title:</label>
+    <input
+      type="text"
+      id="title"
+      name="title"
+      required
+      value="<%= locals.title %>"
+    />
+  </div>
+
+  <div class="form-control">
+    <label for="message">Message:</label>
+    <!-- prettier-ignore -->
+    <textarea id="message" name="message" required><%= locals.message %></textarea>
+  </div>
+
+  <% if (locals.errorList) { %>
+  <div class="form-errors">
+    <% errorList.forEach(error => { %>
+    <p class="error"><%= error.msg %></p>
+    <% }); %>
+  </div>
+  <% } %>
+
+  <button type="submit">Send:</button>
+</form>

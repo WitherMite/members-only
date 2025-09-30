@@ -45,6 +45,13 @@ exports.viewLoginForm = async (req, res) => {
   res.render("login-form", { wasFailure: req.query.f });
 };
 
+exports.viewMessageForm = async (req, res) => {
+  if (req.isAuthenticated()) {
+    return res.render("message-form");
+  }
+  res.redirect("/");
+};
+
 exports.viewMemberForm = async (req, res) => {
   if (req.isAuthenticated()) {
     return res.render("member-form", { wasFailure: req.query.f });
@@ -68,7 +75,6 @@ exports.addUser = [
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.table(errors.array());
       return res.status(400).render("signup-form", {
         username,
         firstname,
@@ -80,11 +86,39 @@ exports.addUser = [
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       await userDB.createUser(username, hashedPassword, firstname, lastname);
-      res.redirect("/");
+      res.redirect("/"); // login user?
     } catch (e) {
       console.error(e);
       next(e);
     }
+  },
+];
+
+exports.newMessage = [
+  validators.validateMessage,
+  async (req, res) => {
+    const errors = validationResult(req);
+    const { title, message } = req.body;
+    if (!req.isAuthenticated()) {
+      // wouldnt happen through the website, but could still send a POST without the form i guess
+      return res.status(400).render("message-form", {
+        title,
+        message,
+        errorList: errors.array().push({ msg: "You are not logged in." }),
+      });
+    }
+
+    if (!errors.isEmpty()) {
+      console.table(errors.array());
+      return res.status(400).render("message-form", {
+        title,
+        message,
+        errorList: errors.array(),
+      });
+    }
+
+    await messageDB.createMessage(req.user.id, title, message);
+    res.redirect("/");
   },
 ];
 

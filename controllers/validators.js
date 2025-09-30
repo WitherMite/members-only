@@ -35,3 +35,14 @@ exports.validateUser = [
     .custom((val, { req }) => val === req.body.password)
     .withMessage("Password fields must match"),
 ];
+
+exports.validateMessage = [
+  body("title")
+    .trim()
+    .isLength({ min: 2, max: 40 })
+    .withMessage("Title must be between 2 and 40 characters"),
+  body("message")
+    .trim()
+    .isLength({ min: 2, max: 400 })
+    .withMessage("Message must be between 2 and 400 characters"),
+];
