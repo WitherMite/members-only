@@ -14,5 +14,6 @@ router.post("/login", controller.loginUser);
 router.post("/logout", controller.logoutUser);
 router.post("/member-form", controller.makeUserMember);
 router.post("/admin-form", controller.makeUserAdmin);
+router.post("/delete-msg", controller.deleteMessage);
 
 module.exports = router;

@@ -26,6 +26,10 @@ app.use(
 );
 app.use(passportStrategy.session());
 app.use(express.urlencoded({ extended: true }));
+app.use((req, res, next) => {
+  console.log(req.user);
+  next();
+});
 app.use("/", router);
 
 app.listen(port, () => {

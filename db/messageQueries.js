@@ -7,6 +7,10 @@ exports.createMessage = async (userId, title, message) => {
   );
 };
 
+exports.deleteMessage = async (id) => {
+  await pool.query("DELETE FROM messages WHERE id = $1;", [id]);
+};
+
 exports.readAllFull = async () => {
   const { rows } = await pool.query(
     "SELECT * FROM messages AS m JOIN (SELECT id AS user_id, username, firstname, lastname FROM users) AS u ON m.user_id = u.user_id;"

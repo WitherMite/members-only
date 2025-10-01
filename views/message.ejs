@@ -6,4 +6,8 @@
     Sent by <%= message.username %> at <%= message.created %>
   </p>
   <% } %>
+  <!-- prettier-ignore -->
+  <% if (locals.user?.is_admin) { %>
+    <%- include("./delete-button.ejs"); %>
+  <% } %>
 </div>

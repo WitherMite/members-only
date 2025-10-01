@@ -124,6 +124,14 @@ exports.newMessage = [
   },
 ];
 
+exports.deleteMessage = async (req, res) => {
+  const { id } = req.body;
+  if (id && req.isAuthenticated() && req.user.is_admin) {
+    await messageDB.deleteMessage(id);
+  }
+  res.redirect("/");
+};
+
 exports.makeUserMember = async (req, res) => {
   const { password } = req.body;
   if (req.isAuthenticated() && password === process.env.MEMBER_PW) {
