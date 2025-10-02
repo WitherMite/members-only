@@ -1,4 +1,5 @@
 const pool = require("./Pool");
+const protectedMessages = [1];
 
 exports.createMessage = async (userId, title, message) => {
   await pool.query(
@@ -8,6 +9,8 @@ exports.createMessage = async (userId, title, message) => {
 };
 
 exports.deleteMessage = async (id) => {
+  if (protectedMessages.includes(Number(id)))
+    throw new Error("That message cannot be deleted");
   await pool.query("DELETE FROM messages WHERE id = $1;", [id]);
 };
 

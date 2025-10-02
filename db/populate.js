@@ -6,6 +6,7 @@ const caPath = process.argv[3];
 const ca = caPath ? fs.readFileSync(caPath).toString() : false;
 
 const SQL = `
+DROP TABLE IF EXISTS session;
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -28,7 +29,7 @@ CREATE TABLE messages (
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO messages (user_id, title, message) VALUES (1, 'Welcome!', 'Hello, this is a members only message board!');
+INSERT INTO messages (user_id, title, message) VALUES (1, 'Hello, this is a members only message board!', 'You must create an account to post, and only member accounts can see the author and date of posts. To promote your account to a member use the button in the header and enter the password: "a5Gr76b". Only admin accounts have the ability to delete posts.');
 `;
 
 async function main() {

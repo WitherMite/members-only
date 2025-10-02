@@ -1,3 +1,4 @@
+<% const protectedMessages = [1]; %>
 <div class="message-card">
   <h2 class="title"><%= message.title %></h2>
   <p class="msg"><%= message.message %></p>
@@ -7,7 +8,7 @@
   </p>
   <% } %>
   <!-- prettier-ignore -->
-  <% if (locals.user?.is_admin) { %>
+  <% if (locals.user?.is_admin && !protectedMessages.includes(message.id)) { %>
     <%- include("./delete-button.ejs"); %>
   <% } %>
 </div>
