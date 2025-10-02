@@ -85,11 +85,19 @@ exports.addUser = [
 
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      await userDB.createUser(username, hashedPassword, firstname, lastname);
-      res.redirect("/"); // login user?
+      const user = await userDB.createUser(
+        username,
+        hashedPassword,
+        firstname,
+        lastname
+      );
+      req.login(user, (e) => {
+        if (e) return next(e);
+        return res.redirect("/");
+      });
     } catch (e) {
       console.error(e);
-      next(e);
+      return next(e);
     }
   },
 ];
