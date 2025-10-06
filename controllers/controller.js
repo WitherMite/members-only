@@ -71,26 +71,19 @@ exports.viewAdminForm = async (req, res) => {
 exports.addUser = [
   validators.validateUser,
   async (req, res, next) => {
-    const { username, password, firstname, lastname } = req.body;
+    const { username, password } = req.body;
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render("signup-form", {
         username,
-        firstname,
-        lastname,
         errorList: errors.array(),
       });
     }
 
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await userDB.createUser(
-        username,
-        hashedPassword,
-        firstname,
-        lastname
-      );
+      const user = await userDB.createUser(username, hashedPassword);
       req.login(user, (e) => {
         if (e) return next(e);
         return res.redirect("/");
